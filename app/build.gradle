@@ -66,5 +66,6 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation("io.coil-kt:coil-compose:2.2.2")
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.6.1'
 
 }

@@ -32,6 +32,10 @@ class QuizViewModel(private val dao: GalleryItemDao) : ViewModel() {
     private val _wrongCount = MutableLiveData<Int>(0)
     val wrongCount: LiveData<Int> = _wrongCount
 
+    // LiveData to keep track of the number of wrong answers
+    private val _count = MutableLiveData<Int>(0)
+    val count: LiveData<Int> = _count
+
     init {
         viewModelScope.launch {
             // Load all gallery items (quiz questions) from Room database
@@ -73,11 +77,13 @@ class QuizViewModel(private val dao: GalleryItemDao) : ViewModel() {
         if (selectedAnswer == current.title) {
             // If the answer is correct, increment the correct count
             _correctCount.value = (_correctCount.value ?: 0) + 1
+            _count.value = (count.value ?: 0) + 1
             // Remove the question from the quiz pool to avoid repetition
             quizPool.removeAll { it.id == current.id }
         } else {
             // If the answer is wrong, increment the wrong count
             _wrongCount.value = (_wrongCount.value ?: 0) + 1
+            _count.value = (count.value ?: 0) + 1
         }
 
         // Start the next question round

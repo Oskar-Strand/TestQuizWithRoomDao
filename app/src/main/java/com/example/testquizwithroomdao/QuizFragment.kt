@@ -13,16 +13,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.testquizwithroomdao.databinding.FragmentQuizBinding
 
-// Fragment that handles the quiz gameplay
 class QuizFragment : Fragment() {
 
     // Companion object to create new instances of the fragment
-    companion object {
-        fun newInstance(): QuizFragment = QuizFragment()
-    }
+   // companion object {
+   //     fun newInstance(): QuizFragment = QuizFragment()
+   // }
 
     private var _binding: FragmentQuizBinding? = null
-    private val binding get() = _binding!! // Ensures _binding is never null when accessed
+    private val binding get() = _binding!!
     lateinit var viewModel: QuizViewModel
 
     // Inflate the layout when the fragment is created
@@ -61,22 +60,26 @@ class QuizFragment : Fragment() {
         viewModel.wrongCount.observe(viewLifecycleOwner) { count ->
             binding.wrongCountText.text = "Wrong: $count"
         }
+        viewModel.count.observe(viewLifecycleOwner) { count ->
+            binding.wrongCountText.text = "Guesses: $count"
+        }
+
 
         // Set click listeners for answer buttons
         val answerClickListener = View.OnClickListener { v ->
             val button = v as Button
-            disableAnswerButtons() // Prevent multiple clicks
+            disableAnswerButtons()
             val selected = button.text.toString()
 
             // Check if the selected answer is correct and update button color accordingly
             if (selected == viewModel.currentQuestion.value?.title) {
-                button.setBackgroundColor(Color.GREEN) // Correct answer
+                button.setBackgroundColor(Color.GREEN)
             } else {
-                button.setBackgroundColor(Color.RED) // Wrong answer
+                button.setBackgroundColor(Color.RED)
                 highlightCorrectButton(viewModel.currentQuestion.value?.title ?: "") // Show correct answer
             }
 
-            // Wait 1 second before submitting the answer and starting a new round
+
             Handler(Looper.getMainLooper()).postDelayed({
                 viewModel.submitAnswer(selected)
             }, 1000)

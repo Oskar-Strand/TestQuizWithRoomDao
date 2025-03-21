@@ -5,9 +5,13 @@ Gallery.kt	Jetpack Compose screen for browsing, adding, and deleting quiz entrie
 GalleryScreen()	Composable function inside Gallery.kt that builds the full UI using Compose.
 
 GalleryItem.kt	Data class for each gallery item (title + image URI).
+
 GalleryViewModel.kt	Handles UI logic and state for the gallery (adding, sorting, deleting).
+
 GalleryViewModelFactory.kt	Provides a DAO to the GalleryViewModel.
+
 GalleryItemDao.kt	DAO interface for database queries (insert, delete, fetch).
+
 GalleryItemDatabase.kt	Room database configuration file.
 DatabaseProvider.kt	Initializes Room database and pre-populates it with default animal images.
 GalleryEvent.kt	Sealed class representing UI events like image added, deleted, etc.
